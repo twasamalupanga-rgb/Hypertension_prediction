@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hypertension Prediction</title>
+  <style>
+    body {
+      background-color: #f4f9ff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 350px;
+    }
+
+    h1 {
+      text-align: center;
+      color: darkblue;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 10px;
+      border: none;
+      background: darkblue;
+      color: white;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: navy;
+    }
+
+    #result {
+      margin-top: 20px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Hypertension Risk Prediction</h1>
+    <form id="predictionForm">
+      <label for="age">Age (years):</label>
+      <input type="number" id="age" name="age" required>
+
+      <label for="salt">Salt Intake (g/day):</label>
+      <input type="number" id="salt" name="salt" step="0.1" required>
+
+      <label for="bmi">BMI:</label>
+      <input type="number" id="bmi" name="bmi" step="0.1" required>
+
+      <label for="smoking">Smoking Status:</label>
+      <select id="smoking" name="smoking" required>
+        <option value="0">Non-Smoker (0)</option>
+        <option value="1">Smoker (1)</option>
+      </select>
+
+      <button type="submit">Predict</button>
+    </form>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+    document.getElementById("predictionForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const age = parseInt(document.getElementById("age").value);
+      const salt = parseFloat(document.getElementById("salt").value);
+      const bmi = parseFloat(document.getElementById("bmi").value);
+      const smoking = parseInt(document.getElementById("smoking").value);
+
+      let riskFactors = 0;
+
+      if (age > 50) riskFactors++;
+      if (salt >= 5) riskFactors++;
+      if (bmi >= 25) riskFactors++;
+      if (smoking === 1) riskFactors++;
+
+      let resultText = "";
+      if (riskFactors >= 2) {
+        resultText = "⚠ High Risk of Hypertension (According to WHO Guidelines)";
+      } else {
+        resultText = "✅ Low Risk of Hypertension (According to WHO Guidelines)";
+      }
+
+      document.getElementById("result").innerText = resultText;
+    });
+  </script>
+</body>
+</html>
